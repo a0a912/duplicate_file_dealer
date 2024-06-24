@@ -40,21 +40,26 @@ def delete_duplicates(duplicates):
 
 
 if __name__ == '__main__':
+    # Create an ArgumentParser object with a description
     parser = argparse.ArgumentParser(description='Find and delete duplicate files in a folder.')
     parser.add_argument('folder', type=str, help='Path to the folder to check for duplicates.')
     parser.add_argument('--delete', action='store_true', help='Delete duplicate files.')
 
+    # Add arguments to the parser
     args = parser.parse_args()
 
+    # Check if the folder exists
     if not os.path.isdir(args.folder):
         print(f'Error: {args.folder} is not a valid directory.')
         sys.exit(1)
 
+    # Find duplicate files in the specified folder based on name and size
     duplicates = find_duplicates_by_name_and_size(args.folder)
 
     #Turn Duplicates into a set and back into a list in order to remove duplicates
 
     duplicates = list(set(duplicates))
     print(duplicates)
+    # If the '--delete' flag is provided, delete the duplicate files
     if args.delete:
         delete_duplicates(duplicates)
